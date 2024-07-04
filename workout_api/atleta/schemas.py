@@ -4,7 +4,7 @@ from workout_api.atleta.models import AtletaModel
 from workout_api.categorias.schemas import CategoriaIn
 from workout_api.centro_treinamento.schemas import CentroTreinamentoAtleta
 
-from workout_api.contrib.schemas import BaseSchema
+from workout_api.contrib.schemas import BaseSchema, OutMixin
 
 
 class Atleta(BaseSchema):
@@ -22,11 +22,14 @@ class AtletaIn(Atleta):
     pass
 
 
+# class AtletaOut(Atleta, OutMixin):
+#     pass
+
 class AtletaOut(BaseSchema):
     nome: str
     centro_treinamento: str
     categoria: str
-
+    
 class AtletaUpdate(BaseSchema):
     nome: Annotated[Optional[str], Field(None, description='Nome do atleta', example='Joao', max_length=50)]
     idade: Annotated[Optional[int], Field(None, description='Idade do atleta', example=25)]

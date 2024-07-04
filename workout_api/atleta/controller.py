@@ -60,17 +60,18 @@ async def post(
         
         db_session.add(atleta_model)
         await db_session.commit()
-    except IntegrityError:
-        raise HTTPException(
-            status_code=303,
-            detail=f'Já existe um atleta cadastrado com o cpf: {atleta_model.cpf}'
-        )
-    except Exception:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
-            detail='Ocorreu um erro ao inserir os dados no banco'
-        )
-
+        
+    except IntegrityError as e:
+        if 'cpf' in str(e):
+            raise HTTPException(
+                status_code=status.HTTP_303_SEE_OTHER, 
+                detail=f'Já existe um atleta cadastrado com o CPF: {atleta_in.cpf}'
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+                detail='Ocorreu um erro ao inserir os dados no banco'
+            )
     return atleta_out
 
 
