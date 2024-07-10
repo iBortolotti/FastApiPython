@@ -6,7 +6,7 @@ from fastapi import APIRouter, Body, HTTPException, status
 from fastapi.params import Query
 from pydantic import UUID4
 
-from workout_api.atleta.schemas import AtletaIn, AtletaOut, AtletaUpdate
+from workout_api.atleta.schemas import AtletaIn, AtletaOut, AtletaOutSimpl, AtletaUpdate
 from workout_api.atleta.models import AtletaModel
 from workout_api.categorias.models import CategoriaModel
 from workout_api.centro_treinamento.models import CentroTreinamentoModel
@@ -15,6 +15,8 @@ from workout_api.contrib.dependencies import DatabaseDependency
 from sqlalchemy.future import select
 from sqlalchemy.exc import IntegrityError
 from fastapi_pagination import LimitOffsetPage, Page, add_pagination
+# from fastapi_pagination.ext.sqlalchemy import LimitOffsetPage, Page, add_pagination
+# from fastapi_pagination.ext.sqlalchemy import Params, paginate
 from fastapi_pagination import Params, paginate
 
 router = APIRouter()
@@ -80,7 +82,7 @@ async def post(
     summary='Consultar todos os Atletas',
     status_code=status.HTTP_200_OK,
     # response_model=list[AtletaOut],
-    response_model=LimitOffsetPage[AtletaOut],
+    response_model=LimitOffsetPage[AtletaOutSimpl],
 )
 
 async def query(

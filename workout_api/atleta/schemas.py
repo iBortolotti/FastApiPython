@@ -22,10 +22,10 @@ class AtletaIn(Atleta):
     pass
 
 
-# class AtletaOut(Atleta, OutMixin):
-#     pass
+class AtletaOut(Atleta, OutMixin):
+    pass
 
-class AtletaOut(BaseSchema):
+class AtletaOutSimpl(BaseSchema):
     nome: str
     centro_treinamento: str
     categoria: str
